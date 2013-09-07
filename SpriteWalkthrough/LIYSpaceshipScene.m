@@ -11,6 +11,8 @@
 @interface LIYSpaceshipScene ()
 @property BOOL contentCreated;
 @property (nonatomic) SKSpriteNode *ship;
+@property (nonatomic) SKLabelNode *collisionCounter;
+@property (nonatomic) NSInteger *collisionCount;
 @end
 
 static inline CGFloat skRandf() {
@@ -25,8 +27,6 @@ static const uint32_t shipCategory = 0x1 << 0;
 static const uint32_t rockCategory = 0x1 << 1;
 static const uint32_t gokuCategory = 0x1 << 2;
 static const uint32_t restingCategory = 0x1 << 3;
-static NSInteger collisionCount = 1;
-
 
 @implementation LIYSpaceshipScene
 
@@ -59,6 +59,8 @@ static NSInteger collisionCount = 1;
     }
     
     if ((firstBody.categoryBitMask & shipCategory) != 0) {
+        self.collisionCount ++;
+        self.collisionCounter.text = [NSString stringWithFormat:@"Hits: %i", self.collisionCount];
 //        [secondBody.node runAction:[SKAction moveToY:8000 duration:12.0]];
 //        [secondBody.node.physicsBody applyImpulse:CGPointMake((secondBody.node.physicsBody.velocity)/200, 2.0)];
         [secondBody applyImpulse:CGVectorMake(secondBody.velocity.dx/2000, secondBody.velocity.dy/2000) atPoint:CGPointMake(0, -1)];
@@ -82,6 +84,8 @@ static NSInteger collisionCount = 1;
 //    self.scaleMode = SKSceneScaleModeAspectFit;
     
     self.ship = [self newShip];
+    self.collisionCounter = [self createCounter];
+    [self addChild:self.collisionCounter];
     
 //    [self.ship addChild:spaceShip];
     self.ship.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)-200);
@@ -93,7 +97,7 @@ static NSInteger collisionCount = 1;
     
     SKSpriteNode *goku = [self makeGoku];
     goku.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
-    [self addChild:goku];
+//    [self addChild:goku];
     
 }
 
@@ -114,10 +118,10 @@ static NSInteger collisionCount = 1;
                                            [SKAction moveByX:0 y:0 duration:
                                             10.0],
                                            [SKAction moveByX:-0 y:0 duration:10.0]]];
-    SKAction *rotate = [SKAction sequence:@[[SKAction rotateByAngle:collisionCount duration:8.0]]];
+    SKAction *rotate = [SKAction sequence:@[[SKAction rotateByAngle:1.0 duration:8.0]]];
     [hull runAction:[SKAction repeatActionForever:hover]];
 //    [hull runAction:[SKAction repeatActionForever:rotate]];
-    
+//    hull.userInteractionEnabled = YES;
     hull.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:hull.size];
     hull.physicsBody.dynamic = NO;
     hull.physicsBody.usesPreciseCollisionDetection = YES;
@@ -127,14 +131,6 @@ static NSInteger collisionCount = 1;
     
     return hull;
     
-}
-
-- (SKNode *)hullToucher
-{
-    SKNode *hullToucher = [[SKNode alloc] init];
-    
-    
-    return hullToucher;
 }
 
 - (SKSpriteNode *)newLight
@@ -200,6 +196,17 @@ static NSInteger collisionCount = 1;
     
     return goku;
     
+}
+
+- (SKLabelNode *)createCounter
+{
+    self.collisionCounter = [[SKLabelNode alloc] initWithFontNamed:@"Helvetica"];
+    
+    self.collisionCounter.position = CGPointMake(100, 300);
+    self.collisionCounter.text = @"Hits: ";
+    self.collisionCounter.fontColor = [SKColor whiteColor];
+    self.collisionCounter.fontSize = 30;
+    return self.collisionCounter;
 }
 
 //- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event

@@ -81,11 +81,11 @@
             self.startRaindrops = [self.storyboard instantiateViewControllerWithIdentifier:@"raindropsViewController"];
 
             [self presentViewController:self.startRaindrops animated:YES completion:nil];
-            }
+        }
     } else if (indexPath.row == 1) {
         if (self.startHelloScene == nil) {
             self.startHelloScene = [self.storyboard instantiateViewControllerWithIdentifier:@"helloSceneViewController"];
-            
+            [self presentViewController:self.startHelloScene animated:YES completion:nil];
         }
     }
 }
