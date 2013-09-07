@@ -11,9 +11,9 @@
 #import "LIYHelloSceneViewController.h"
 
 @interface LIYLevelSelectorTableViewController ()
-@property (strong, nonatomic) NSArray *levels;
-@property (strong, nonatomic) LIYViewController *startRaindrops;
-@property (strong, nonatomic) LIYHelloSceneViewController *startHelloScene;
+@property (nonatomic) NSArray *levels;
+@property (nonatomic) LIYViewController *startRaindrops;
+@property (nonatomic) LIYHelloSceneViewController *startHelloScene;
 @end
 
 @implementation LIYLevelSelectorTableViewController

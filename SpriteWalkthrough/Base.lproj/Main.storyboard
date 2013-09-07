@@ -31,7 +31,7 @@
                         <viewControllerLayoutGuide type="top" id="cMF-wZ-NTE"/>
                         <viewControllerLayoutGuide type="bottom" id="ets-W9-d6V"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="b1S-Gg-8U5">
+                    <view key="view" contentMode="scaleToFill" id="b1S-Gg-8U5" customClass="SKView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
