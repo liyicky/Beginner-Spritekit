@@ -63,7 +63,7 @@ static const uint32_t restingCategory = 0x1 << 3;
         self.collisionCounter.text = [NSString stringWithFormat:@"Hits: %i", self.collisionCount];
 //        [secondBody.node runAction:[SKAction moveToY:8000 duration:12.0]];
 //        [secondBody.node.physicsBody applyImpulse:CGPointMake((secondBody.node.physicsBody.velocity)/200, 2.0)];
-        [secondBody applyImpulse:CGVectorMake(secondBody.velocity.dx/2000, secondBody.velocity.dy/2000) atPoint:CGPointMake(0, -1)];
+        [secondBody applyImpulse:CGVectorMake(secondBody.velocity.dx/2000, secondBody.velocity.dy/2000) atPoint:CGPointMake(0, 0)];
 
 //        secondBody.categoryBitMask = restingCategory;
 //        secondBody.collisionBitMask = shipCategory | rockCategory;
@@ -87,7 +87,6 @@ static const uint32_t restingCategory = 0x1 << 3;
     self.collisionCounter = [self createCounter];
     [self addChild:self.collisionCounter];
     
-//    [self.ship addChild:spaceShip];
     self.ship.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)-200);
     [self addChild:self.ship];
     SKAction *makeRain = [SKAction sequence:@[
@@ -98,6 +97,9 @@ static const uint32_t restingCategory = 0x1 << 3;
     SKSpriteNode *goku = [self makeGoku];
     goku.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
 //    [self addChild:goku];
+    
+    UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotation:)];
+    [self.view addGestureRecognizer:rotationRecognizer];
     
 }
 
@@ -121,7 +123,7 @@ static const uint32_t restingCategory = 0x1 << 3;
     SKAction *rotate = [SKAction sequence:@[[SKAction rotateByAngle:1.0 duration:8.0]]];
     [hull runAction:[SKAction repeatActionForever:hover]];
 //    [hull runAction:[SKAction repeatActionForever:rotate]];
-//    hull.userInteractionEnabled = YES;
+    hull.userInteractionEnabled = YES;
     hull.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:hull.size];
     hull.physicsBody.dynamic = NO;
     hull.physicsBody.usesPreciseCollisionDetection = YES;
@@ -202,36 +204,41 @@ static const uint32_t restingCategory = 0x1 << 3;
 {
     self.collisionCounter = [[SKLabelNode alloc] initWithFontNamed:@"Helvetica"];
     
-    self.collisionCounter.position = CGPointMake(100, 300);
+    self.collisionCounter.position = CGPointMake(100, 2000);
     self.collisionCounter.text = @"Hits: ";
     self.collisionCounter.fontColor = [SKColor whiteColor];
     self.collisionCounter.fontSize = 30;
     return self.collisionCounter;
 }
 
-//- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-//{
-//    for (UITouch *touch in touches) {
-//        CGPoint location = [touch locationInView:self.view];
-//        
-//        self.ship.position = location;
-//        lastTouch = location;
-//    }
-//}
-
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     for (UITouch *touch in touches) {
         CGPoint location = [touch locationInView:self.view];
         
-        NSLog(@"Location: %f", location);
-        NSLog(@"Touch: %f", touch);
-        NSLog(@"Ship POSITION: %f, %f", self.ship.position.x, self.ship.position.y);
-        NSLog(@"Converted Location: %f, %f", [self.view convertPoint:location toScene:self.scene].x, [self.view convertPoint:location toScene:self.scene].y);
+//        NSLog(@"Location: %f", location);
+//        NSLog(@"Touch: %f", touch);
+//        NSLog(@"Ship POSITION: %f, %f", self.ship.position.x, self.ship.position.y);
+//        NSLog(@"Converted Location: %f, %f", [self.view convertPoint:location toScene:self.scene].x, [self.view convertPoint:location toScene:self.scene].y);
         
         self.ship.position = [self.view convertPoint:location toScene:self.scene];
         
     }
+}
+
+- (void)handlePinch:(UIPinchGestureRecognizer *)recognizer
+{
+    recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
+    NSLog(@"PINCH: %i", recognizer);
+    recognizer.scale = 1;
+}
+
+- (void)handleRotation:(UIRotationGestureRecognizer *)recognizer
+{
+    SKAction *rotate = [SKAction sequence:@[[SKAction rotateByAngle:-(recognizer.rotation) duration:0.0]]];
+    [self.ship runAction:rotate];
+
+    recognizer.rotation = 0;
 }
 
 @end
