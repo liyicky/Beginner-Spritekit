@@ -59,11 +59,10 @@ static const uint32_t restingCategory = 0x1 << 3;
     }
     
     if ((firstBody.categoryBitMask & shipCategory) != 0) {
-        self.collisionCount ++;
         self.collisionCounter.text = [NSString stringWithFormat:@"Hits: %i", self.collisionCount];
-//        [secondBody.node runAction:[SKAction moveToY:8000 duration:12.0]];
+        [secondBody.node runAction:[SKAction moveToY:8000 duration:12.0]];
 //        [secondBody.node.physicsBody applyImpulse:CGPointMake((secondBody.node.physicsBody.velocity)/200, 2.0)];
-        [secondBody applyImpulse:CGVectorMake(secondBody.velocity.dx/2000, secondBody.velocity.dy/2000) atPoint:CGPointMake(0, 0)];
+//        [secondBody applyImpulse:CGVectorMake((secondBody.velocity.dx)/5000, (secondBody.velocity.dy)/5000) atPoint:CGPointMake(0, 0)];
 
 //        secondBody.categoryBitMask = restingCategory;
 //        secondBody.collisionBitMask = shipCategory | rockCategory;
@@ -81,7 +80,7 @@ static const uint32_t restingCategory = 0x1 << 3;
 
 - (void)createSceneContents
 {
-//    self.scaleMode = SKSceneScaleModeAspectFit;
+    self.scaleMode = SKSceneScaleModeAspectFit;
     
     self.ship = [self newShip];
     self.collisionCounter = [self createCounter];
@@ -91,7 +90,7 @@ static const uint32_t restingCategory = 0x1 << 3;
     [self addChild:self.ship];
     SKAction *makeRain = [SKAction sequence:@[
                                                [SKAction performSelector:@selector(addDrop) onTarget:self],
-                                               [SKAction waitForDuration: 0.0 withRange:0.2]]];
+                                               [SKAction waitForDuration: 0.0 withRange:0.5]]];
     [self runAction:[SKAction repeatActionForever:makeRain]];
     
     SKSpriteNode *goku = [self makeGoku];
@@ -100,6 +99,10 @@ static const uint32_t restingCategory = 0x1 << 3;
     
     UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotation:)];
     [self.view addGestureRecognizer:rotationRecognizer];
+    
+//Pinching Recognition ~~~
+//    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+//    [self.view addGestureRecognizer:pinchRecognizer];
     
 }
 
@@ -120,9 +123,8 @@ static const uint32_t restingCategory = 0x1 << 3;
                                            [SKAction moveByX:0 y:0 duration:
                                             10.0],
                                            [SKAction moveByX:-0 y:0 duration:10.0]]];
-    SKAction *rotate = [SKAction sequence:@[[SKAction rotateByAngle:1.0 duration:8.0]]];
-    [hull runAction:[SKAction repeatActionForever:hover]];
-//    [hull runAction:[SKAction repeatActionForever:rotate]];
+//    [hull runAction:[SKAction repeatActionForever:hover]];
+    
     hull.userInteractionEnabled = YES;
     hull.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:hull.size];
     hull.physicsBody.dynamic = NO;
@@ -172,13 +174,17 @@ static const uint32_t restingCategory = 0x1 << 3;
 - (void)didSimulatePhysics
 {
     [self enumerateChildNodesWithName:@"drop" usingBlock:^(SKNode *node, BOOL *stop) {
+        if (node.position.y > 2500) {
+            self.collisionCount ++;
+            [node removeFromParent];
+        }
         if (node.position.y < 0) {
             [node removeFromParent];
         }
         if (node.position.x < 0) {
             [node removeFromParent];
         }
-        if (self.children.count > 80) {
+        if (self.children.count > 120) {
             [node removeFromParent];
         }
     }];
@@ -229,7 +235,7 @@ static const uint32_t restingCategory = 0x1 << 3;
 - (void)handlePinch:(UIPinchGestureRecognizer *)recognizer
 {
     recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
-    NSLog(@"PINCH: %i", recognizer);
+
     recognizer.scale = 1;
 }
 

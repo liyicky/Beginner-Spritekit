@@ -9,6 +9,4 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface LIYSpaceshipScene : SKScene <SKPhysicsContactDelegate, UIGestureRecognizerDelegate>
-- (IBAction)handlePinch:(UIPinchGestureRecognizer *)recognizer;
-- (IBAction)handleRotation:(UIRotationGestureRecognizer *)recognizer;
 @end
