@@ -11,6 +11,6 @@
 
 #import "LIYMainMenuScene.h"
 @interface LIYViewController : UIViewController
-- (SKScene *)loadScene:(SKScene *)scene;
+
 @end
 

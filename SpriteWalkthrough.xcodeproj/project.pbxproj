@@ -12,6 +12,10 @@
 		7B2A526917CC01E300CC13A0 /* LIYSpaceshipScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7BAA810B179D76C900FC1E35 /* LIYSpaceshipScene.m */; };
 		7B9BD2F817D926B2001FC8BF /* LIYHelloSceneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BD2F717D926B2001FC8BF /* LIYHelloSceneViewController.m */; };
 		7B9BD30017DA9B16001FC8BF /* goku_ssj.png in Resources */ = {isa = PBXBuildFile; fileRef = 7B9BD2FF17DA9B16001FC8BF /* goku_ssj.png */; };
+		7B9BD30317DBE1FA001FC8BF /* LIYGeneticAlgoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BD30217DBE1FA001FC8BF /* LIYGeneticAlgoViewController.m */; };
+		7B9BD30617DBE425001FC8BF /* LIYGeneticAlgoScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BD30517DBE425001FC8BF /* LIYGeneticAlgoScene.m */; };
+		7B9BD30A17DBE6FF001FC8BF /* LIYChromosome.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BD30917DBE6FF001FC8BF /* LIYChromosome.m */; };
+		7B9BD30D17DBE713001FC8BF /* LIYGeneticAlgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B9BD30C17DBE713001FC8BF /* LIYGeneticAlgo.m */; };
 		7BAA80D3179CA49F00FC1E35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAA80D2179CA49F00FC1E35 /* Foundation.framework */; };
 		7BAA80D5179CA49F00FC1E35 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAA80D4179CA49F00FC1E35 /* CoreGraphics.framework */; };
 		7BAA80D7179CA49F00FC1E35 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BAA80D6179CA49F00FC1E35 /* UIKit.framework */; };
@@ -47,6 +51,14 @@
 		7B9BD2F617D926B2001FC8BF /* LIYHelloSceneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIYHelloSceneViewController.h; sourceTree = "<group>"; };
 		7B9BD2F717D926B2001FC8BF /* LIYHelloSceneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIYHelloSceneViewController.m; sourceTree = "<group>"; };
 		7B9BD2FF17DA9B16001FC8BF /* goku_ssj.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = goku_ssj.png; path = ../../../../../Photos/Web/goku_ssj.png; sourceTree = "<group>"; };
+		7B9BD30117DBE1FA001FC8BF /* LIYGeneticAlgoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIYGeneticAlgoViewController.h; sourceTree = "<group>"; };
+		7B9BD30217DBE1FA001FC8BF /* LIYGeneticAlgoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIYGeneticAlgoViewController.m; sourceTree = "<group>"; };
+		7B9BD30417DBE425001FC8BF /* LIYGeneticAlgoScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIYGeneticAlgoScene.h; sourceTree = "<group>"; };
+		7B9BD30517DBE425001FC8BF /* LIYGeneticAlgoScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIYGeneticAlgoScene.m; sourceTree = "<group>"; };
+		7B9BD30817DBE6FF001FC8BF /* LIYChromosome.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIYChromosome.h; sourceTree = "<group>"; };
+		7B9BD30917DBE6FF001FC8BF /* LIYChromosome.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIYChromosome.m; sourceTree = "<group>"; };
+		7B9BD30B17DBE713001FC8BF /* LIYGeneticAlgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIYGeneticAlgo.h; sourceTree = "<group>"; };
+		7B9BD30C17DBE713001FC8BF /* LIYGeneticAlgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIYGeneticAlgo.m; sourceTree = "<group>"; };
 		7BAA80CF179CA49F00FC1E35 /* SpriteWalkthrough.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteWalkthrough.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BAA80D2179CA49F00FC1E35 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7BAA80D4179CA49F00FC1E35 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,6 +132,21 @@
 			name = "Rain Scene";
 			sourceTree = "<group>";
 		};
+		7B9BD30717DBE42B001FC8BF /* Genetic Algo Scene */ = {
+			isa = PBXGroup;
+			children = (
+				7B9BD30417DBE425001FC8BF /* LIYGeneticAlgoScene.h */,
+				7B9BD30517DBE425001FC8BF /* LIYGeneticAlgoScene.m */,
+				7B9BD30817DBE6FF001FC8BF /* LIYChromosome.h */,
+				7B9BD30917DBE6FF001FC8BF /* LIYChromosome.m */,
+				7B9BD30B17DBE713001FC8BF /* LIYGeneticAlgo.h */,
+				7B9BD30C17DBE713001FC8BF /* LIYGeneticAlgo.m */,
+				7B9BD30117DBE1FA001FC8BF /* LIYGeneticAlgoViewController.h */,
+				7B9BD30217DBE1FA001FC8BF /* LIYGeneticAlgoViewController.m */,
+			);
+			name = "Genetic Algo Scene";
+			sourceTree = "<group>";
+		};
 		7BAA80C6179CA49F00FC1E35 = {
 			isa = PBXGroup;
 			children = (
@@ -161,6 +188,7 @@
 				7B1796B317D6121E00743AFC /* LIYLevelSelectorTableViewController.m */,
 				7B9BD2FA17D926D6001FC8BF /* Rain Scene */,
 				7B9BD2F917D926C1001FC8BF /* Hello Scene */,
+				7B9BD30717DBE42B001FC8BF /* Genetic Algo Scene */,
 				7BAA80EA179CA49F00FC1E35 /* Images.xcassets */,
 				7BAA80D9179CA49F00FC1E35 /* Supporting Files */,
 			);
@@ -298,14 +326,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B9BD30617DBE425001FC8BF /* LIYGeneticAlgoScene.m in Sources */,
 				7BAA8109179CB19800FC1E35 /* LIYHelloScene.m in Sources */,
 				7BAA80E9179CA49F00FC1E35 /* LIYViewController.m in Sources */,
 				7BAA80DF179CA49F00FC1E35 /* main.m in Sources */,
 				7B2A526917CC01E300CC13A0 /* LIYSpaceshipScene.m in Sources */,
+				7B9BD30A17DBE6FF001FC8BF /* LIYChromosome.m in Sources */,
+				7B9BD30317DBE1FA001FC8BF /* LIYGeneticAlgoViewController.m in Sources */,
 				7BAA80E3179CA49F00FC1E35 /* LIYAppDelegate.m in Sources */,
 				7B1796B117D36DB100743AFC /* LIYMainMenuScene.m in Sources */,
 				7B1796B417D6121E00743AFC /* LIYLevelSelectorTableViewController.m in Sources */,
 				7B9BD2F817D926B2001FC8BF /* LIYHelloSceneViewController.m in Sources */,
+				7B9BD30D17DBE713001FC8BF /* LIYGeneticAlgo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

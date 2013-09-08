@@ -32,11 +32,6 @@
 
 }
 
-- (SKScene *)loadScene:(SKScene *)scene
-{
-    return scene;
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
