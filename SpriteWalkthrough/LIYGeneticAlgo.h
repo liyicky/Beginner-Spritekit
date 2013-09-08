@@ -9,5 +9,10 @@
 #import <Foundation/Foundation.h>
 
 @interface LIYGeneticAlgo : NSObject
-
+@property (readonly, assign, nonatomic) NSInteger generations;
+@property (readonly, strong, nonatomic) NSString *result;
+@property (readwrite, strong, nonatomic) NSMutableArray *chromosomes;
+@property (readwrite, strong, nonatomic) NSMutableArray *chromosomeFitness;
+- (id)initWithTargetSequence:(NSString *)sequence;
+- (void)execute;
 @end
