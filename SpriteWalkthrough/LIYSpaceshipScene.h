@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "LIYChromosome.h"
 
 @interface LIYSpaceshipScene : SKScene <SKPhysicsContactDelegate, UIGestureRecognizerDelegate>
 @end

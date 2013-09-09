@@ -83,6 +83,7 @@ static const uint32_t restingCategory = 0x1 << 3;
     self.scaleMode = SKSceneScaleModeAspectFit;
     
     self.ship = [self newShip];
+
     self.collisionCounter = [self createCounter];
     [self addChild:self.collisionCounter];
     

@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SpriteKit/SpriteKit.h>
 
-@interface LIYChromosome : NSObject
-@property (strong, nonatomic, readonly) NSString *geneSequence;
-@property (strong, nonatomic, readonly) NSNumber *geneFitness;
-- (id)initWithGeneCount:(NSUInteger)count;
+@interface LIYChromosome : SKSpriteNode
+@property (strong, readonly, nonatomic) NSNumber *geneFitenss;
+@property (strong, nonatomic) NSMutableArray *behavior;
+@property (strong, nonatomic) NSDictionary *gene;
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other;
 - (BOOL)isFitterThanChromosome:(LIYChromosome *)other forTargetSequence:(NSString *)sequence;
 @end
