@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 
-static const uint32_t chromosomeCategory;
+static const uint32_t chromosomeCategory = 0x1 << 0;
 
 @interface LIYChromosome : SKSpriteNode <SKPhysicsContactDelegate>
+
 @property (strong, readonly, nonatomic) NSNumber *geneFitenss;
 @property (strong, nonatomic) NSMutableArray *behavior;
 @property (strong, nonatomic) NSDictionary *gene;

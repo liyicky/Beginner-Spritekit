@@ -99,6 +99,8 @@ static const uint32_t restingCategory = 0x1 << 3;
     goku.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
 //    [self addChild:goku];
     
+    
+//Rotation Recognition ~~~
     UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotation:)];
     [self.view addGestureRecognizer:rotationRecognizer];
     
@@ -159,7 +161,7 @@ static const uint32_t restingCategory = 0x1 << 3;
 //    drop.position = CGPointMake(CGRectGetMidX(self.frame), self.size.height);
     
     drop.color = [SKColor blueColor];
-    drop.size = CGSizeMake(32,32);
+    drop.size = CGSizeMake(8,8);
     drop.name = @"drop";
     drop.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:drop.size];
     drop.physicsBody.dynamic = YES;

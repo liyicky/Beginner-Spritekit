@@ -21,7 +21,7 @@
 - (id)initWithSize:(CGSize)size
 {
     if (self = [super initWithSize:size]) {
-        self.physicsWorld.gravity = CGPointMake(0, -12);
+        self.physicsWorld.gravity = CGPointMake(0, 0);
         self.physicsWorld.contactDelegate = self;
     }
     return self;
@@ -40,13 +40,14 @@
 {
     [self initScene];
     
-    SKAction *breed = [SKAction sequence:@[[SKAction performSelector:@selector(testBreeding) onTarget:self], [SKAction waitForDuration:0.5 withRange:1.0]]];
+    SKAction *breed = [SKAction sequence:@[[SKAction performSelector:@selector(testBreeding) onTarget:self], [SKAction waitForDuration:0.0 withRange:1.0]]];
     [self runAction:[SKAction repeatActionForever:breed]];
 }
 
 - (void)testBreeding
 {
     LIYChromosome * kittyCat = [[LIYChromosome alloc] init];
+    NSLog(@"Lifetime :%f", self.kittyCat.lifeTime);
     [self addChild:kittyCat];
 }
 
@@ -83,7 +84,7 @@
     }
     
     if ((firstBody.categoryBitMask & chromosomeCategory) != 0) {
-        [secondBody.node runAction:[SKAction moveToY:8000 duration:12.0]];
+//        [secondBody.node runAction:[SKAction moveToY:8000 duration:12.0]];
     }
 }
 

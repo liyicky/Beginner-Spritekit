@@ -24,8 +24,6 @@
 @property (nonatomic) CGSize size;
 @end
 
-static const uint32_t chromosomeCategory = 0x1 << 0;
-
 @implementation LIYChromosome
 @synthesize fitness;
 @synthesize behavior;
@@ -43,7 +41,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self = [super init];
     if (self) {
         
-        [self createOrganisum];
+        [self createOrganism];
 
     }
     return self;
@@ -56,7 +54,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 //    return self.gene;
 //}
 
-- (void)createOrganisum
+- (void)createOrganism
 {
     CGRect screen = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screen.size.width;
@@ -66,26 +64,26 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     NSInteger yRand = arc4random() % 20 + 1;
     NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 800);
     NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 800);
-    NSInteger randColor = arc4random() % 80;
+    CGFloat hue = ( arc4random() % 256 / 256.0);
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
+    UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
     NSLog(@"LRAND: %i, %i", xRand, yRand);
     
     NSDate *startLife = [NSDate date];
-    
-    
-    
-    self.color = [SKColor colorWithRed:randColor green:randColor blue:randColor alpha:1.0];
+
+    self.color = color;
     self.lifeTime = [startLife timeIntervalSinceNow];
     self.position = CGPointMake(skRand(0, screenWidth), skRand(0, screenHeigh));
     self.size = CGSizeMake(xRand, yRand);
     self.name = @"chromosome";
     
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
-    self.physicsBody.dynamic = NO;
+    self.physicsBody.dynamic = YES;
     self.physicsBody.usesPreciseCollisionDetection = YES;
     self.physicsBody.categoryBitMask = chromosomeCategory;
     self.physicsBody.collisionBitMask = chromosomeCategory;
     self.physicsBody.contactTestBitMask = chromosomeCategory;
-    self.physicsBody.mass = 1;
 
     self.trait1 = [SKAction rotateByAngle:rand duration:rand];
     self.trait2 = [SKAction moveByX:xRandAction y:yRandAction duration:rand];
