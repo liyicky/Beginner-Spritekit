@@ -9,11 +9,13 @@
 #import "LIYLevelSelectorTableViewController.h"
 #import "LIYViewController.h"
 #import "LIYHelloSceneViewController.h"
+#import "LIYGeneticAlgoViewController.h"
 
 @interface LIYLevelSelectorTableViewController ()
 @property (nonatomic) NSArray *levels;
 @property (nonatomic) LIYViewController *startRaindrops;
 @property (nonatomic) LIYHelloSceneViewController *startHelloScene;
+@property (nonatomic) LIYGeneticAlgoScene *startGeneticAlgo;
 @end
 
 @implementation LIYLevelSelectorTableViewController
@@ -40,7 +42,8 @@
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"LevelCell"];
     
     self.levels = @[@"Raindrops",
-                    @"Hello World"];
+                    @"Hello World",
+                    @"Liyicky's Algo"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -86,6 +89,11 @@
         if (self.startHelloScene == nil) {
             self.startHelloScene = [self.storyboard instantiateViewControllerWithIdentifier:@"helloSceneViewController"];
             [self presentViewController:self.startHelloScene animated:YES completion:nil];
+        }
+    } else if (indexPath.row == 2) {
+        if (self.startGeneticAlgo == nil) {
+            self.startGeneticAlgo = [self.storyboard instantiateViewControllerWithIdentifier:@"geneticAlgoViewController"];
+            [self presentViewController:self.startGeneticAlgo animated:NO completion:nil];
         }
     }
 }

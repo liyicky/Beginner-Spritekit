@@ -39,7 +39,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kan-GJ-nNh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1353" y="-166"/>
+            <point key="canvasLocation" x="1349" y="-174"/>
+        </scene>
+        <!--Genetic Algo View Controller-->
+        <scene sceneID="f9N-Op-JQb">
+            <objects>
+                <viewController storyboardIdentifier="geneticAlgoViewController" id="j0f-wK-J9t" customClass="LIYGeneticAlgoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0Qg-Ok-o7q"/>
+                        <viewControllerLayoutGuide type="bottom" id="r0B-fw-3gM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0jD-n3-9ln" customClass="SKView">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EA3-EL-G06" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1695" y="-174"/>
         </scene>
         <!--Level Selector Table View Controller-->
         <scene sceneID="KCO-B5-PAi">

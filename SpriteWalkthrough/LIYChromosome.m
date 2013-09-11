@@ -19,10 +19,12 @@
 @property (nonatomic) NSInteger *fitness;
 @property (strong, nonatomic) SKAction *trait1;
 @property (strong, nonatomic) SKAction *trait2;
+@property (strong, nonatomic) SKAction *trait3;
 @property (nonatomic) CGPoint position;
 @property (nonatomic) CGSize size;
-@property (nonatomic) double lifeTime;
 @end
+
+static const uint32_t chromosomeCategory = 0x1 << 0;
 
 @implementation LIYChromosome
 @synthesize fitness;
@@ -36,25 +38,13 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     return skRandf() * (high - low) + low;
 }
 
-
 - (id)init
 {
     self = [super init];
     if (self) {
-        CGFloat rand = skRand(arc4random(), arc4random());
-        self.trait1 = [SKAction moveBY:CGVectorMake(skRand(rand, rand), skRand(rand, rand)) duration:rand];
-        self.trait2 = [SKAction rotateByAngle:rand duration:rand];
         
-        self.color = [SKColor greenColor];
-        
-        NSDate *startLife = [NSDate date];
-        self.lifeTime = [startLife timeIntervalSinceNow];
-        
-        self.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
-        self.size = CGSizeMake(20, 20);
-//        [self runAction:[SKAction sequence:@[self.trait1,
-//                                             self.trait2]]];
-    
+        [self createOrganisum];
+
     }
     return self;
 }
@@ -65,6 +55,44 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 //    self.gene = @{@"trait1" : self.trait1, @"trait2" : self.trait2, @"position_x" : position_x, @"position_y" : self.position.y, @"size" : self.size};
 //    return self.gene;
 //}
+
+- (void)createOrganisum
+{
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screen.size.width;
+    CGFloat screenHeigh = screen.size.height;
+    NSInteger rand = arc4random() % 20 + 1;
+    NSInteger xRand = arc4random() % 20 + 1;
+    NSInteger yRand = arc4random() % 20 + 1;
+    NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 800);
+    NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 800);
+    NSInteger randColor = arc4random() % 80;
+    NSLog(@"LRAND: %i, %i", xRand, yRand);
+    
+    NSDate *startLife = [NSDate date];
+    
+    
+    
+    self.color = [SKColor colorWithRed:randColor green:randColor blue:randColor alpha:1.0];
+    self.lifeTime = [startLife timeIntervalSinceNow];
+    self.position = CGPointMake(skRand(0, screenWidth), skRand(0, screenHeigh));
+    self.size = CGSizeMake(xRand, yRand);
+    self.name = @"chromosome";
+    
+    self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
+    self.physicsBody.dynamic = NO;
+    self.physicsBody.usesPreciseCollisionDetection = YES;
+    self.physicsBody.categoryBitMask = chromosomeCategory;
+    self.physicsBody.collisionBitMask = chromosomeCategory;
+    self.physicsBody.contactTestBitMask = chromosomeCategory;
+    self.physicsBody.mass = 1;
+
+    self.trait1 = [SKAction rotateByAngle:rand duration:rand];
+    self.trait2 = [SKAction moveByX:xRandAction y:yRandAction duration:rand];
+    [self runAction:self.trait1];
+    [self runAction:self.trait2];
+
+}
 
 - (NSInteger *)geneFitness
 {
@@ -99,5 +127,6 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 {
     
 }
+
 
 @end

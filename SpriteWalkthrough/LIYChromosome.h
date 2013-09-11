@@ -9,10 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 
-@interface LIYChromosome : SKSpriteNode
+static const uint32_t chromosomeCategory;
+
+@interface LIYChromosome : SKSpriteNode <SKPhysicsContactDelegate>
 @property (strong, readonly, nonatomic) NSNumber *geneFitenss;
 @property (strong, nonatomic) NSMutableArray *behavior;
 @property (strong, nonatomic) NSDictionary *gene;
+@property (nonatomic) float lifeTime;
+
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other;
-- (BOOL)isFitterThanChromosome:(LIYChromosome *)other forTargetSequence:(NSString *)sequence;
+
 @end

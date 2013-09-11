@@ -32,7 +32,8 @@ static const uint32_t restingCategory = 0x1 << 3;
 
 - (id)initWithSize:(CGSize)size
 {
-    if (self = [super initWithSize:size]) {
+    if (self = [super initWithSize:size])
+    {
         self.physicsWorld.gravity = CGPointMake(0, -12);
         self.physicsWorld.contactDelegate = self;
     }
@@ -102,8 +103,8 @@ static const uint32_t restingCategory = 0x1 << 3;
     [self.view addGestureRecognizer:rotationRecognizer];
     
 //Pinching Recognition ~~~
-//    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
-//    [self.view addGestureRecognizer:pinchRecognizer];
+    UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+    [self.view addGestureRecognizer:pinchRecognizer];
     
 }
 
@@ -153,9 +154,12 @@ static const uint32_t restingCategory = 0x1 << 3;
 
 - (void)addDrop
 {
-    SKSpriteNode *drop = [[SKSpriteNode alloc] initWithColor:[SKColor blueColor] size:CGSizeMake(8,8)];
+    SKSpriteNode *drop = [[SKSpriteNode alloc] init];
     drop.position = CGPointMake(skRand(0, self.size.width), self.size.height);
 //    drop.position = CGPointMake(CGRectGetMidX(self.frame), self.size.height);
+    
+    drop.color = [SKColor blueColor];
+    drop.size = CGSizeMake(32,32);
     drop.name = @"drop";
     drop.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:drop.size];
     drop.physicsBody.dynamic = YES;
@@ -244,7 +248,6 @@ static const uint32_t restingCategory = 0x1 << 3;
 {
     SKAction *rotate = [SKAction sequence:@[[SKAction rotateByAngle:-(recognizer.rotation) duration:0.0]]];
     [self.ship runAction:rotate];
-
     recognizer.rotation = 0;
 }
 
