@@ -59,21 +59,21 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     CGRect screen = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screen.size.width;
     CGFloat screenHeigh = screen.size.height;
+    
     NSInteger rand = arc4random() % 20 + 1;
     NSInteger xRand = arc4random() % 20 + 1;
     NSInteger yRand = arc4random() % 20 + 1;
-    NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 800);
-    NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 800);
+    NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
+    NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
     CGFloat hue = ( arc4random() % 256 / 256.0);
     CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
     UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
-    NSLog(@"LRAND: %i, %i", xRand, yRand);
     
     NSDate *startLife = [NSDate date];
-
-    self.color = color;
     self.lifeTime = [startLife timeIntervalSinceNow];
+    
+    self.color = color;
     self.position = CGPointMake(skRand(0, screenWidth), skRand(0, screenHeigh));
     self.size = CGSizeMake(xRand, yRand);
     self.name = @"chromosome";
@@ -81,15 +81,14 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:self.size];
     self.physicsBody.dynamic = YES;
     self.physicsBody.usesPreciseCollisionDetection = YES;
+    self.physicsBody.restitution = 1.0;
     self.physicsBody.categoryBitMask = chromosomeCategory;
-    self.physicsBody.collisionBitMask = chromosomeCategory;
-    self.physicsBody.contactTestBitMask = chromosomeCategory;
+    self.physicsBody.collisionBitMask = chromosomeCategory | sceneCategory;
+    self.physicsBody.contactTestBitMask = chromosomeCategory | sceneCategory;
+    
+    self.physicsBody.velocity = CGVectorMake(xRandAction, yRandAction);
 
-    self.trait1 = [SKAction rotateByAngle:rand duration:rand];
-    self.trait2 = [SKAction moveByX:xRandAction y:yRandAction duration:rand];
-    [self runAction:self.trait1];
-    [self runAction:self.trait2];
-
+    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(dieAnOldMan) userInfo:nil repeats:NO];
 }
 
 - (NSInteger *)geneFitness
@@ -121,6 +120,10 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     return child;
 }
 
+- (void)dieAnOldMan
+{
+    [self removeFromParent];
+}
 - (void)mutate
 {
     

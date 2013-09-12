@@ -8,8 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
-
-static const uint32_t chromosomeCategory = 0x1 << 0;
+#import "LIYGeneticAlgoScene.h"
 
 @interface LIYChromosome : SKSpriteNode <SKPhysicsContactDelegate>
 
@@ -19,5 +18,6 @@ static const uint32_t chromosomeCategory = 0x1 << 0;
 @property (nonatomic) float lifeTime;
 
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other;
+- (void)dieAnOldMan;
 
 @end

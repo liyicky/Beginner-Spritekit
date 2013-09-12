@@ -14,8 +14,6 @@
 @property (nonatomic) LIYChromosome *kittyCat;
 @end
 
-
-
 @implementation LIYGeneticAlgoScene
 
 - (id)initWithSize:(CGSize)size
@@ -47,7 +45,6 @@
 - (void)testBreeding
 {
     LIYChromosome * kittyCat = [[LIYChromosome alloc] init];
-    NSLog(@"Lifetime :%f", self.kittyCat.lifeTime);
     [self addChild:kittyCat];
 }
 
@@ -55,6 +52,7 @@
 - (void)initScene
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
+    self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
 }
 
 - (void)didSimulatePhysics
@@ -84,10 +82,17 @@
     }
     
     if ((firstBody.categoryBitMask & chromosomeCategory) != 0) {
-//        [secondBody.node runAction:[SKAction moveToY:8000 duration:12.0]];
+//        [firstBody applyTorque:(1.0)];
+//        [secondBody applyForce:CGVectorMake(1, 1)];
+    }
+    
+    if ((firstBody.categoryBitMask & sceneCategory) != 0) {
+        [firstBody applyImpulse:CGVectorMake((firstBody.velocity.dx)/2, (firstBody.velocity.dy)/2)];
+        
+        NSLog(@"First Body V: %f, %f", firstBody.velocity.dx, firstBody.velocity.dy);
+        NSLog(@"Second Body V: %f, %f", secondBody.velocity.dx, secondBody.velocity.dy);
     }
 }
-
 
 
 
