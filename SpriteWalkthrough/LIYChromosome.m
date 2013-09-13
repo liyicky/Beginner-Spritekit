@@ -16,7 +16,6 @@
 #define RANDOM_MOD(_MOD) (arc4random_uniform(_MOD))
 
 @interface LIYChromosome ()
-@property (nonatomic) NSInteger *fitness;
 @property (strong, nonatomic) SKAction *trait1;
 @property (strong, nonatomic) SKAction *trait2;
 @property (strong, nonatomic) SKAction *trait3;
@@ -25,7 +24,7 @@
 @end
 
 @implementation LIYChromosome
-@synthesize fitness;
+@synthesize geneFitness;
 @synthesize behavior;
 
 static inline CGFloat skRandf() {
@@ -72,7 +71,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     
     NSDate *startLife = [NSDate date];
     self.lifeTime = [startLife timeIntervalSinceNow];
-    
+    self.geneFitness = 0;
     self.color = color;
     self.position = CGPointMake(skRand(0, screenWidth), skRand(0, screenHeigh));
     self.size = CGSizeMake(xRand, yRand);
@@ -88,13 +87,9 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     
     self.physicsBody.velocity = CGVectorMake(xRandAction, yRandAction);
 
-    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(dieAnOldMan) userInfo:nil repeats:NO];
+//    [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(die) userInfo:nil repeats:NO];
 }
 
-- (NSInteger *)geneFitness
-{
-    return self.fitness;
-}
 
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other
 {
@@ -120,14 +115,16 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     return child;
 }
 
-- (void)dieAnOldMan
+- (void)die
 {
-    [self removeFromParent];
+    [self runAction:[SKAction sequence:@[[SKAction fadeAlphaTo:0 duration:0.2],
+                                         [SKAction removeFromParent]]]];
 }
 - (void)mutate
 {
     
 }
+
 
 
 @end

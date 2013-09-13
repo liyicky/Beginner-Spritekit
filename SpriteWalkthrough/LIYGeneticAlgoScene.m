@@ -11,7 +11,15 @@
 
 @interface LIYGeneticAlgoScene()
 @property BOOL contentCreated;
-@property (nonatomic) LIYChromosome *kittyCat;
+@property (nonatomic) LIYChromosome *kittyCat1;
+@property (nonatomic) LIYChromosome *kittyCat2;
+@property (nonatomic) LIYChromosome *kittyCat3;
+@property (nonatomic) LIYChromosome *kittyCat4;
+@property (nonatomic) LIYChromosome *kittyCat5;
+@property (nonatomic) LIYChromosome *kittyCat6;
+@property (nonatomic) LIYChromosome *kittyCat7;
+@property (nonatomic) LIYChromosome *kittyCat8;
+@property (nonatomic) LIYChromosome *kittyCat9;
 @end
 
 @implementation LIYGeneticAlgoScene
@@ -38,14 +46,14 @@
 {
     [self initScene];
     
-    SKAction *breed = [SKAction sequence:@[[SKAction performSelector:@selector(testBreeding) onTarget:self], [SKAction waitForDuration:0.0 withRange:1.0]]];
+    SKAction *breed = [SKAction sequence:@[[SKAction performSelector:@selector(testBreeding) onTarget:self], [SKAction waitForDuration:1.0 withRange:1.0]]];
     [self runAction:[SKAction repeatActionForever:breed]];
 }
 
 - (void)testBreeding
 {
-    LIYChromosome * kittyCat = [[LIYChromosome alloc] init];
-    [self addChild:kittyCat];
+    self.kittyCat1 = [[LIYChromosome alloc] init];
+    [self addChild:self.kittyCat1];
 }
 
 
@@ -59,11 +67,11 @@
 {
     [self enumerateChildNodesWithName:@"chromosome" usingBlock:^(SKNode *node, BOOL * stop) {
         if (node.position.y < 0) {
-            NSLog(@"Lifetime :%f", self.kittyCat.lifeTime);
+            NSLog(@"Lifetime :%f", self.kittyCat1.lifeTime);
             [node removeFromParent];
         }
         if (node.position.x < 0) {
-            NSLog(@"Lifetime :%f", self.kittyCat.lifeTime);
+            NSLog(@"Lifetime :%f", self.kittyCat1.lifeTime);
             [node removeFromParent];
         }
     }];
@@ -82,16 +90,14 @@
     }
     
     if ((firstBody.categoryBitMask & chromosomeCategory) != 0) {
-//        [firstBody applyTorque:(1.0)];
-//        [secondBody applyForce:CGVectorMake(1, 1)];
+        self.kittyCat1.geneFitness++;
+        NSLog(@"Fitness %i", self.kittyCat1.geneFitness);
+        
+        if (self.kittyCat1.geneFitness > 3)
+            [self.kittyCat1 die];
+
     }
     
-    if ((firstBody.categoryBitMask & sceneCategory) != 0) {
-        [firstBody applyImpulse:CGVectorMake((firstBody.velocity.dx)/2, (firstBody.velocity.dy)/2)];
-        
-        NSLog(@"First Body V: %f, %f", firstBody.velocity.dx, firstBody.velocity.dy);
-        NSLog(@"Second Body V: %f, %f", secondBody.velocity.dx, secondBody.velocity.dy);
-    }
 }
 
 

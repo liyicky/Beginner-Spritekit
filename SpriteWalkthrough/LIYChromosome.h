@@ -12,12 +12,13 @@
 
 @interface LIYChromosome : SKSpriteNode <SKPhysicsContactDelegate>
 
-@property (strong, readonly, nonatomic) NSNumber *geneFitenss;
+@property (nonatomic) NSInteger geneFitness;
 @property (strong, nonatomic) NSMutableArray *behavior;
 @property (strong, nonatomic) NSDictionary *gene;
 @property (nonatomic) float lifeTime;
 
+
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other;
-- (void)dieAnOldMan;
+- (void)die;
 
 @end

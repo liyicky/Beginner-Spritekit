@@ -12,7 +12,7 @@
 @property BOOL contentCreated;
 @property (nonatomic) SKSpriteNode *ship;
 @property (nonatomic) SKLabelNode *collisionCounter;
-@property (nonatomic) NSInteger *collisionCount;
+@property (nonatomic) NSInteger collisionCount;
 @end
 
 static inline CGFloat skRandf() {
@@ -60,6 +60,7 @@ static const uint32_t restingCategory = 0x1 << 3;
     }
     
     if ((firstBody.categoryBitMask & shipCategory) != 0) {
+        self.collisionCount++;
         self.collisionCounter.text = [NSString stringWithFormat:@"Hits: %i", self.collisionCount];
         [secondBody.node runAction:[SKAction moveToY:8000 duration:12.0]];
 //        [secondBody.node.physicsBody applyImpulse:CGPointMake((secondBody.node.physicsBody.velocity)/200, 2.0)];
@@ -182,7 +183,6 @@ static const uint32_t restingCategory = 0x1 << 3;
 {
     [self enumerateChildNodesWithName:@"drop" usingBlock:^(SKNode *node, BOOL *stop) {
         if (node.position.y > 2500) {
-            self.collisionCount ++;
             [node removeFromParent];
         }
         if (node.position.y < 0) {
