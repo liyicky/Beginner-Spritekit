@@ -8,18 +8,11 @@
 
 #import "LIYGeneticAlgoScene.h"
 #import "LIYChromosome.h"
+#import "LIYGeneticAlgo.h"
 
 @interface LIYGeneticAlgoScene()
 @property BOOL contentCreated;
-@property (nonatomic) LIYChromosome *kittyCat1;
-@property (nonatomic) LIYChromosome *kittyCat2;
-@property (nonatomic) LIYChromosome *kittyCat3;
-@property (nonatomic) LIYChromosome *kittyCat4;
-@property (nonatomic) LIYChromosome *kittyCat5;
-@property (nonatomic) LIYChromosome *kittyCat6;
-@property (nonatomic) LIYChromosome *kittyCat7;
-@property (nonatomic) LIYChromosome *kittyCat8;
-@property (nonatomic) LIYChromosome *kittyCat9;
+@property (nonatomic) LIYGeneticAlgo *factory;
 @end
 
 @implementation LIYGeneticAlgoScene
@@ -41,37 +34,32 @@
     }
 }
 
+- (void)runAlgo
+{
+    [self.factory run];
+}
 
 - (void)createSceneContents
 {
     [self initScene];
-    
-    SKAction *breed = [SKAction sequence:@[[SKAction performSelector:@selector(testBreeding) onTarget:self], [SKAction waitForDuration:1.0 withRange:1.0]]];
-    [self runAction:[SKAction repeatActionForever:breed]];
+    [self.factory execute];
+    [self runAlgo];
 }
-
-- (void)testBreeding
-{
-    self.kittyCat1 = [[LIYChromosome alloc] init];
-    [self addChild:self.kittyCat1];
-}
-
 
 - (void)initScene
 {
     self.scaleMode = SKSceneScaleModeAspectFit;
     self.physicsBody = [SKPhysicsBody bodyWithEdgeLoopFromRect:self.frame];
+    self.factory = [[LIYGeneticAlgo alloc] initWithScene:self];
 }
 
 - (void)didSimulatePhysics
 {
     [self enumerateChildNodesWithName:@"chromosome" usingBlock:^(SKNode *node, BOOL * stop) {
         if (node.position.y < 0) {
-            NSLog(@"Lifetime :%f", self.kittyCat1.lifeTime);
             [node removeFromParent];
         }
         if (node.position.x < 0) {
-            NSLog(@"Lifetime :%f", self.kittyCat1.lifeTime);
             [node removeFromParent];
         }
     }];
@@ -90,12 +78,16 @@
     }
     
     if ((firstBody.categoryBitMask & chromosomeCategory) != 0) {
-        self.kittyCat1.geneFitness++;
-        NSLog(@"Fitness %i", self.kittyCat1.geneFitness);
-        
-        if (self.kittyCat1.geneFitness > 3)
-            [self.kittyCat1 die];
-
+        self.factory.chromosome1.geneFitness++;
+        self.factory.chromosome2.geneFitness++;
+        self.factory.chromosome3.geneFitness++;
+        self.factory.chromosome4.geneFitness++;
+        self.factory.chromosome5.geneFitness++;
+        self.factory.chromosome6.geneFitness++;
+        self.factory.chromosome7.geneFitness++;
+        self.factory.chromosome8.geneFitness++;
+        self.factory.chromosome9.geneFitness++;
+        self.factory.chromosome10.geneFitness++;
     }
     
 }

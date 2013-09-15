@@ -8,13 +8,6 @@
 
 #import "LIYChromosome.h"
 
-#define ARC4RANDOM_MAX (0x100000000)
-#define MUTATION_DELTA_MAX (6)
-#define MUTATION_RATE (0.20f)
-#define MUTATION_THRESHOLD (ARC4RANDOM_MAX * MUTATION_RATE)
-#define RANDOM() (arc4random())
-#define RANDOM_MOD(_MOD) (arc4random_uniform(_MOD))
-
 @interface LIYChromosome ()
 @property (strong, nonatomic) SKAction *trait1;
 @property (strong, nonatomic) SKAction *trait2;
@@ -35,6 +28,7 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     return skRandf() * (high - low) + low;
 }
 
+
 - (id)init
 {
     self = [super init];
@@ -46,20 +40,11 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     return self;
 }
 
-//- (NSDictionary *)gene
-//{
-//    CGFloat position_x = self.position.x;
-//    self.gene = @{@"trait1" : self.trait1, @"trait2" : self.trait2, @"position_x" : position_x, @"position_y" : self.position.y, @"size" : self.size};
-//    return self.gene;
-//}
-
 - (void)createOrganism
 {
     CGRect screen = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screen.size.width;
     CGFloat screenHeigh = screen.size.height;
-    
-    NSInteger rand = arc4random() % 20 + 1;
     NSInteger xRand = arc4random() % 20 + 1;
     NSInteger yRand = arc4random() % 20 + 1;
     NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
@@ -86,17 +71,40 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.physicsBody.contactTestBitMask = chromosomeCategory | sceneCategory;
     
     self.physicsBody.velocity = CGVectorMake(xRandAction, yRandAction);
-
-//    [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(die) userInfo:nil repeats:NO];
+    
+    [self makeGene];
+    
 }
 
+- (NSMutableDictionary *)makeGene
+{
+    
+    UIColor *geneColor = self.color;
+    NSValue *genePosition = [NSValue valueWithCGPoint:self.position];
+    NSValue *geneSize = [NSValue valueWithCGSize:self.size];
+    NSNumber *geneVelocityDX = [NSNumber numberWithFloat:self.physicsBody.velocity.dx];
+    NSNumber *geneVelocityDY = [NSNumber numberWithFloat:self.physicsBody.velocity.dy];
+    NSNumber *lifeTime = [NSNumber numberWithFloat:self.lifeTime];
+    NSNumber *geneFitness = [NSNumber numberWithInt:self.geneFitness];
+    
+    
+    self.gene = @{@"Color"      : geneColor,
+                  @"Position"   : genePosition,
+                  @"Size"       : geneSize,
+                  @"VelocityDX" : geneVelocityDX,
+                  @"VelocityDY" : geneVelocityDY,
+                  @"LifeTime"   : lifeTime,
+                  @"GeneFitness": geneFitness};
+
+    return self.gene;
+}
 
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other
 {
+    NSInteger rand = arc4random() % 20 + 1;
     LIYChromosome *child = [[LIYChromosome alloc] init];
-    LIYChromosome *champ;
     
-    if (self.lifeTime > other.lifeTime) {
+    if (self.geneFitness > other.geneFitness) {
         child.trait1 = self.trait1;
         child.trait2 = self.trait2;
         child.position = self.position;
@@ -108,23 +116,55 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
         child.size = other.size;
     }
     
-    if (RANDOM() < MUTATION_THRESHOLD) {
+    if (rand > 19) {
         [child mutate];
+        NSLog(@"MUTATION!");
     }
+    
+    NSLog(@"%i - %i - %i", self.geneFitness, other.geneFitness, child.geneFitness);
+
     
     return child;
 }
 
 - (void)die
 {
-    [self runAction:[SKAction sequence:@[[SKAction fadeAlphaTo:0 duration:0.2],
+    [self runAction:[SKAction sequence:@[[SKAction fadeAlphaTo:1 duration:5.2],
                                          [SKAction removeFromParent]]]];
+    
+//    for (NSString *key in [self.gene allKeys]) NSLog(@"%@ : %@", key, [self.gene objectForKey:key]);
 }
 - (void)mutate
 {
+    NSInteger rand = arc4random() % 4 + 1;
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screen.size.width;
+    CGFloat screenHeigh = screen.size.height;
+    NSInteger xRand = arc4random() % 20 + 1;
+    NSInteger yRand = arc4random() % 20 + 1;
+    NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
+    NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
+    CGFloat hue = ( arc4random() % 256 / 256.0);
+    CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
+    CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
+    UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
     
+    if (rand == 1)
+        self.color = color;
+    else if (rand == 2)
+        self.position = CGPointMake(skRand(0, screenWidth), skRand(0, screenHeigh));
+    else if (rand == 3)
+        self.size = CGSizeMake(xRand, yRand);
+    else if (rand == 4)
+        self.physicsBody.velocity = CGVectorMake(xRandAction, yRandAction);
 }
 
+- (BOOL)isFitterThanChromosom:(LIYChromosome *)other
+{
+    NSNumber *selfFitness = [NSNumber numberWithInt:self.geneFitness];
+    NSNumber *otherFitness = [NSNumber numberWithInt:other.geneFitness];
+    return selfFitness > otherFitness;
+}
 
 
 @end

@@ -14,11 +14,13 @@
 
 @property (nonatomic) NSInteger geneFitness;
 @property (strong, nonatomic) NSMutableArray *behavior;
-@property (strong, nonatomic) NSDictionary *gene;
 @property (nonatomic) float lifeTime;
+@property (strong, nonatomic) NSMutableDictionary *gene;
 
-
+- (NSMutableDictionary *)gene;
+- (BOOL)isFitterThanChromosom:(LIYChromosome *)other;
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other;
 - (void)die;
+- (void)mutate;
 
 @end
