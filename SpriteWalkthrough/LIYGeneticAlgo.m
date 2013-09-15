@@ -11,9 +11,19 @@
 @interface LIYGeneticAlgo()
 @property (nonatomic) SKScene *scene;
 @property (nonatomic, readwrite, assign) NSInteger generations;
-@property (nonatomic) NSMutableArray *population;
 @property (nonatomic) NSTimer *timer;
 @property (nonatomic) LIYChromosome *chromo;
+
+@property (nonatomic) LIYChromosome *chromosome1;
+@property (nonatomic) LIYChromosome *chromosome2;
+@property (nonatomic) LIYChromosome *chromosome3;
+@property (nonatomic) LIYChromosome *chromosome4;
+@property (nonatomic) LIYChromosome *chromosome5;
+@property (nonatomic) LIYChromosome *chromosome6;
+@property (nonatomic) LIYChromosome *chromosome7;
+@property (nonatomic) LIYChromosome *chromosome8;
+@property (nonatomic) LIYChromosome *chromosome9;
+@property (nonatomic) LIYChromosome *chromosome10;
 
 - (void)breedNextGeneration;
 - (void)populate;
@@ -80,21 +90,15 @@
 
 -(void)breedNextGeneration
 {
-    LIYChromosome *mom, *dad, *child;
-    NSInteger index1, index2, deadIndex;
-    NSInteger count = self.population.count;
-    BOOL keepFirst;
+    LIYChromosome *mom, *dad;
+    NSInteger momIndex, dadIndex;
     
-    for (int i = 0; i < count; i += 2) {
-        index1 = i;
-        index2 = i +1;
-        mom = [self.population objectAtIndex:index1];
-        dad = [self.population objectAtIndex:index2];
-        keepFirst = [mom isFitterThanChromosom:dad];
-        deadIndex = keepFirst ? index2 : index1;
-        child = [mom mateWithChromosome:dad];
-
-        [self.population replaceObjectAtIndex:deadIndex withObject:child];
+    for (int i = 0; i < self.population.count; i += 2) {
+        momIndex = i;
+        dadIndex = i +1;
+        mom = [self.population objectAtIndex:momIndex];
+        dad = [self.population objectAtIndex:dadIndex];
+        [mom mateWithChromosome:dad];
     }
 }
 

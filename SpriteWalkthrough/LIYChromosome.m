@@ -17,8 +17,6 @@
 @end
 
 @implementation LIYChromosome
-@synthesize geneFitness;
-@synthesize behavior;
 
 static inline CGFloat skRandf() {
     return rand() / (CGFloat) RAND_MAX;
@@ -102,29 +100,23 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other
 {
     NSInteger rand = arc4random() % 20 + 1;
-    LIYChromosome *child = [[LIYChromosome alloc] init];
     
-    if (self.geneFitness > other.geneFitness) {
-        child.trait1 = self.trait1;
-        child.trait2 = self.trait2;
-        child.position = self.position;
-        child.size = self.size;
-    } else {
-        child.trait1 = other.trait1;
-        child.trait2 = other.trait2;
-        child.position = other.position;
-        child.size = other.size;
+    if (self.geneFitness < other.geneFitness) {
+        self.trait1 = other.trait1;
+        self.trait2 = other.trait2;
+        self.position = other.position;
+        self.size = other.size;
     }
     
     if (rand > 19) {
-        [child mutate];
+        [self mutate];
         NSLog(@"MUTATION!");
     }
     
-    NSLog(@"%i - %i - %i", self.geneFitness, other.geneFitness, child.geneFitness);
+    NSLog(@"%i - %i", self.geneFitness, other.geneFitness);
 
     
-    return child;
+    return self;
 }
 
 - (void)die

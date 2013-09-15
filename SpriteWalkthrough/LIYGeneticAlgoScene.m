@@ -13,6 +13,7 @@
 @interface LIYGeneticAlgoScene()
 @property BOOL contentCreated;
 @property (nonatomic) LIYGeneticAlgo *factory;
+@property (nonatomic) LIYChromosome *chromo;
 @end
 
 @implementation LIYGeneticAlgoScene
@@ -78,16 +79,11 @@
     }
     
     if ((firstBody.categoryBitMask & chromosomeCategory) != 0) {
-        self.factory.chromosome1.geneFitness++;
-        self.factory.chromosome2.geneFitness++;
-        self.factory.chromosome3.geneFitness++;
-        self.factory.chromosome4.geneFitness++;
-        self.factory.chromosome5.geneFitness++;
-        self.factory.chromosome6.geneFitness++;
-        self.factory.chromosome7.geneFitness++;
-        self.factory.chromosome8.geneFitness++;
-        self.factory.chromosome9.geneFitness++;
-        self.factory.chromosome10.geneFitness++;
+        for (int i = 0; i < self.factory.population.count; i++) {
+            self.chromo = [self.factory.population objectAtIndex:i];
+            self.chromo.geneFitness++;
+        }
+
     }
     
 }
