@@ -8,7 +8,17 @@
 
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
-#import "LIYGeneticAlgoScene.h"
+
+static const uint32_t chromosome1Category  = 0x1 << 1;
+static const uint32_t chromosome2Category  = 0x1 << 2;
+static const uint32_t chromosome3Category  = 0x1 << 3;
+static const uint32_t chromosome4Category  = 0x1 << 4;
+static const uint32_t chromosome5Category  = 0x1 << 5;
+static const uint32_t chromosome6Category  = 0x1 << 6;
+static const uint32_t chromosome7Category  = 0x1 << 7;
+static const uint32_t chromosome8Category  = 0x1 << 8;
+static const uint32_t chromosome9Category  = 0x1 << 9;
+static const uint32_t chromosome10Category = 0x1 << 10;
 
 @interface LIYChromosome : SKSpriteNode <SKPhysicsContactDelegate>
 

@@ -7,6 +7,7 @@
 //
 
 #import "LIYChromosome.h"
+#import "LIYGeneticAlgoScene.h"
 
 @interface LIYChromosome ()
 @property (strong, nonatomic) SKAction *trait1;
@@ -14,6 +15,7 @@
 @property (strong, nonatomic) SKAction *trait3;
 @property (nonatomic) CGPoint position;
 @property (nonatomic) CGSize size;
+@property uint32_t category;
 @end
 
 @implementation LIYChromosome
@@ -64,13 +66,16 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     self.physicsBody.dynamic = YES;
     self.physicsBody.usesPreciseCollisionDetection = YES;
     self.physicsBody.restitution = 1.0;
-    self.physicsBody.categoryBitMask = chromosomeCategory;
-    self.physicsBody.collisionBitMask = chromosomeCategory | sceneCategory;
-    self.physicsBody.contactTestBitMask = chromosomeCategory | sceneCategory;
+    self.physicsBody.categoryBitMask = self.category;
+    
+    self.physicsBody.collisionBitMask = chromosome1Category | chromosome2Category | chromosome3Category | chromosome4Category | chromosome5Category | chromosome6Category | chromosome7Category | chromosome8Category | chromosome9Category | chromosome10Category;
+    
+    self.physicsBody.contactTestBitMask = chromosome1Category | chromosome2Category | chromosome3Category | chromosome4Category | chromosome5Category | chromosome6Category | chromosome7Category | chromosome8Category | chromosome9Category | chromosome10Category;
     
     self.physicsBody.velocity = CGVectorMake(xRandAction, yRandAction);
     
     [self makeGene];
+    
     
 }
 
@@ -104,13 +109,19 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     if (self.geneFitness < other.geneFitness) {
         self.trait1 = other.trait1;
         self.trait2 = other.trait2;
-        self.position = other.position;
         self.size = other.size;
+        self.color = other.color;
+    } else {
+        other.trait1 = self.trait1;
+        other.trait2 = self.trait2;
+        other.trait3 = self.trait3;
+        other.size = self.size;
+        other.color = self.color;
     }
     
     if (rand > 19) {
         [self mutate];
-        NSLog(@"MUTATION!");
+        NSLog(@"MUTATION! %i", rand);
     }
     
     NSLog(@"%i - %i", self.geneFitness, other.geneFitness);
@@ -124,7 +135,12 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     [self runAction:[SKAction sequence:@[[SKAction fadeAlphaTo:1 duration:5.2],
                                          [SKAction removeFromParent]]]];
     
-//    for (NSString *key in [self.gene allKeys]) NSLog(@"%@ : %@", key, [self.gene objectForKey:key]);
+//    for (NSString *key in [self.gene allKeys]) {
+//        if ([key  isEqual: @"VelocityDY"])
+//            NSLog(@"%@ : %@", key, [self.gene objectForKey:key]);
+//        if ([key  isEqual: @"VelocityDX"])
+//            NSLog(@"%@ : %@", key, [self.gene objectForKey:key]);
+//    }
 }
 - (void)mutate
 {

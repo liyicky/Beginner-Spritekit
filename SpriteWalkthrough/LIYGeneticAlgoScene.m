@@ -7,7 +7,6 @@
 //
 
 #import "LIYGeneticAlgoScene.h"
-#import "LIYChromosome.h"
 #import "LIYGeneticAlgo.h"
 
 @interface LIYGeneticAlgoScene()
@@ -78,14 +77,37 @@
         secondBody = contact.bodyA;
     }
     
-    if ((firstBody.categoryBitMask & chromosomeCategory) != 0) {
-        for (int i = 0; i < self.factory.population.count; i++) {
-            self.chromo = [self.factory.population objectAtIndex:i];
-            self.chromo.geneFitness++;
-        }
-
+    if ((firstBody.categoryBitMask & chromosome1Category) != 0) {
+        self.factory.chromosome1.geneFitness++;
     }
-    
+    if ((firstBody.categoryBitMask & chromosome2Category) != 0) {
+        self.factory.chromosome2.geneFitness++;
+    }
+    if ((firstBody.categoryBitMask & chromosome3Category) != 0) {
+        self.factory.chromosome3.geneFitness++;
+    }
+    if ((firstBody.categoryBitMask & chromosome4Category) != 0) {
+        self.factory.chromosome4.geneFitness++;
+    }
+    if ((firstBody.categoryBitMask & chromosome5Category) != 0) {
+        self.factory.chromosome5.geneFitness++;
+    }
+    if ((firstBody.categoryBitMask & chromosome6Category) != 0) {
+        self.factory.chromosome6.geneFitness++;
+    }
+    if ((firstBody.categoryBitMask & chromosome7Category) != 0) {
+        self.factory.chromosome7.geneFitness++;
+    }
+    if ((firstBody.categoryBitMask & chromosome8Category) != 0) {
+        self.factory.chromosome8.geneFitness++;
+    }
+    if ((firstBody.categoryBitMask & chromosome9Category) != 0) {
+        self.factory.chromosome9.geneFitness++;
+    }
+    if ((firstBody.categoryBitMask & chromosome10Category) != 0) {
+        self.factory.chromosome10.geneFitness++;
+    }
+
 }
 
 

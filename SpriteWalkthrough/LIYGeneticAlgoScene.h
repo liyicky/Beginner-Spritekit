@@ -7,9 +7,9 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import "LIYChromosome.h"
 
-static const uint32_t chromosomeCategory = 0x1 << 0;
-static const uint32_t sceneCategory = 0x1 << 1;
+static const uint32_t sceneCategory = 0x1 << 0;
 
 @interface LIYGeneticAlgoScene : SKScene <SKPhysicsContactDelegate>
 @end
