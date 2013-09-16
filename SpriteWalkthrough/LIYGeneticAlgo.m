@@ -17,7 +17,6 @@
 @property (nonatomic) NSArray *categories;
 
 - (void)breedNextGeneration;
-- (void)populate;
 - (void)shufflePopulation;
 
 @end
@@ -84,8 +83,8 @@
 - (void)execute
 {
     [self populate];
-    [self breedNextGeneration];
     [self shufflePopulation];
+    [self breedNextGeneration];
 }
 
 - (void)populate
@@ -115,6 +114,8 @@
         mom = [self.population objectAtIndex:momIndex];
         dad = [self.population objectAtIndex:dadIndex];
         [mom mateWithChromosome:dad];
+        [mom changePosition];
+        [dad changePosition];
         
         mom.geneFitness = 0;
         dad.geneFitness = 0;

@@ -20,6 +20,14 @@ static const uint32_t chromosome8Category  = 0x1 << 8;
 static const uint32_t chromosome9Category  = 0x1 << 9;
 static const uint32_t chromosome10Category = 0x1 << 10;
 
+static inline CGFloat skRandf() {
+    return rand() / (CGFloat) RAND_MAX;
+}
+
+static inline CGFloat skRand(CGFloat low, CGFloat high) {
+    return skRandf() * (high - low) + low;
+}
+
 @interface LIYChromosome : SKSpriteNode <SKPhysicsContactDelegate>
 
 @property (nonatomic) NSInteger geneFitness;
@@ -27,9 +35,9 @@ static const uint32_t chromosome10Category = 0x1 << 10;
 @property (nonatomic) float lifeTime;
 @property (strong, nonatomic) NSMutableDictionary *gene;
 
-- (NSMutableDictionary *)gene;
 - (BOOL)isFitterThanChromosom:(LIYChromosome *)other;
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other;
+- (LIYChromosome *)changePosition;
 - (void)die;
 - (void)mutate;
 

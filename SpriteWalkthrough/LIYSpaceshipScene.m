@@ -15,14 +15,6 @@
 @property (nonatomic) NSInteger collisionCount;
 @end
 
-static inline CGFloat skRandf() {
-    return rand() / (CGFloat) RAND_MAX;
-}
-
-static inline CGFloat skRand(CGFloat low, CGFloat high) {
-    return skRandf() * (high - low) + low;
-}
-
 static const uint32_t shipCategory = 0x1 << 0;
 static const uint32_t rockCategory = 0x1 << 1;
 static const uint32_t gokuCategory = 0x1 << 2;

@@ -42,7 +42,7 @@
 - (void)createSceneContents
 {
     [self initScene];
-    [self.factory execute];
+    [self.factory populate];
     [self runAlgo];
 }
 

@@ -20,15 +20,6 @@
 
 @implementation LIYChromosome
 
-static inline CGFloat skRandf() {
-    return rand() / (CGFloat) RAND_MAX;
-}
-
-static inline CGFloat skRand(CGFloat low, CGFloat high) {
-    return skRandf() * (high - low) + low;
-}
-
-
 - (id)init
 {
     self = [super init];
@@ -47,8 +38,8 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     CGFloat screenHeigh = screen.size.height;
     NSInteger xRand = arc4random() % 20 + 1;
     NSInteger yRand = arc4random() % 20 + 1;
-    NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
-    NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
+    NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 100);
+    NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 100);
     CGFloat hue = ( arc4random() % 256 / 256.0);
     CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
@@ -102,24 +93,35 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     return self.gene;
 }
 
+- (LIYChromosome *)changePosition
+{
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screen.size.width;
+    CGFloat screenHeigh = screen.size.height;
+    self.position = CGPointMake(skRand(0, screenWidth), skRand(0, screenHeigh));
+    return self;
+}
+
 - (LIYChromosome *)mateWithChromosome:(LIYChromosome *)other
 {
-    NSInteger rand = arc4random() % 20 + 1;
+    NSInteger rand = arc4random() % 20;
     
     if (self.geneFitness < other.geneFitness) {
         self.trait1 = other.trait1;
         self.trait2 = other.trait2;
         self.size = other.size;
         self.color = other.color;
+        self.physicsBody.velocity = other.physicsBody.velocity;
     } else {
         other.trait1 = self.trait1;
         other.trait2 = self.trait2;
         other.trait3 = self.trait3;
         other.size = self.size;
         other.color = self.color;
+        other.physicsBody.velocity = self.physicsBody.velocity;
     }
     
-    if (rand > 19) {
+    if (rand > 15) {
         [self mutate];
         NSLog(@"MUTATION! %i", rand);
     }
@@ -135,35 +137,30 @@ static inline CGFloat skRand(CGFloat low, CGFloat high) {
     [self runAction:[SKAction sequence:@[[SKAction fadeAlphaTo:1 duration:5.2],
                                          [SKAction removeFromParent]]]];
     
-//    for (NSString *key in [self.gene allKeys]) {
-//        if ([key  isEqual: @"VelocityDY"])
-//            NSLog(@"%@ : %@", key, [self.gene objectForKey:key]);
-//        if ([key  isEqual: @"VelocityDX"])
-//            NSLog(@"%@ : %@", key, [self.gene objectForKey:key]);
-//    }
+    for (NSString *key in [self.gene allKeys]) {
+        if ([key  isEqual: @"VelocityDY"])
+            NSLog(@"%@ : %@", key, [self.gene objectForKey:key]);
+        if ([key  isEqual: @"VelocityDX"])
+            NSLog(@"%@ : %@", key, [self.gene objectForKey:key]);
+    }
 }
 - (void)mutate
 {
-    NSInteger rand = arc4random() % 4 + 1;
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screen.size.width;
-    CGFloat screenHeigh = screen.size.height;
+    NSInteger rand = arc4random() % 3;
     NSInteger xRand = arc4random() % 20 + 1;
     NSInteger yRand = arc4random() % 20 + 1;
-    NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
-    NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 600);
+    NSInteger xRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 1000);
+    NSInteger yRandAction = (arc4random() % 2 ? 1 : -1) * (arc4random() % 1000);
     CGFloat hue = ( arc4random() % 256 / 256.0);
     CGFloat saturation = ( arc4random() % 128 / 256.0 ) + 0.5;
     CGFloat brightness = ( arc4random() % 128 / 256.0 ) + 0.5;
     UIColor *color = [UIColor colorWithHue:hue saturation:saturation brightness:brightness alpha:1];
     
-    if (rand == 1)
+    if (rand == 0)
         self.color = color;
-    else if (rand == 2)
-        self.position = CGPointMake(skRand(0, screenWidth), skRand(0, screenHeigh));
-    else if (rand == 3)
+    else if (rand == 1)
         self.size = CGSizeMake(xRand, yRand);
-    else if (rand == 4)
+    else if (rand == 2)
         self.physicsBody.velocity = CGVectorMake(xRandAction, yRandAction);
 }
 

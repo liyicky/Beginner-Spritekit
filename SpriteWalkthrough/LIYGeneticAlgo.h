@@ -26,6 +26,6 @@
 
 - (id)initWithScene:(SKScene *)scene;
 - (void)run;
-- (void)execute;
+- (void)populate;
 
 @end
